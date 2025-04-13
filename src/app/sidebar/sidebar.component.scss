@@ -1,0 +1,172 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+.sidebar {
+  font-family: 'Inter', sans-serif;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  width: 280px;
+  height: auto; /* height adjusts based on content */
+  
+  /* Use fixed position to stick to the left */
+  position: fixed;
+  top: 50%;
+  left: 20px; /* adjust this value as needed */
+  transform: translateY(-50%);
+  
+  /* Optional margin-bottom if needed by layout */
+  margin-bottom: 20px;
+
+  .sidebar-title {
+    font-size: 1.25rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f0f2f5;
+  }
+
+  .filter-section {
+    margin-bottom: 1.5rem;
+
+    .filter-title {
+      font-size: 0.95rem;
+      color: #3498db;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      i {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #e0e3e7;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    background-color: #f8f9fa;
+
+    &:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+  }
+
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #34495e;
+    user-select: none;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+
+      &:checked ~ .checkmark {
+        background-color: #3498db;
+        border-color: #3498db;
+
+        &:after {
+          display: block;
+        }
+      }
+    }
+
+    .checkmark {
+      position: absolute;
+      left: 0;
+      height: 18px;
+      width: 18px;
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+
+    &:hover input ~ .checkmark {
+      border-color: #3498db;
+    }
+  }
+
+  .apply-btn, .reset-btn {
+    width: 100%;
+    padding: 0.7rem;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .apply-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    margin-bottom: 0.75rem;
+
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
+
+  .reset-btn {
+    background-color: transparent;
+    color: #7f8c8d;
+    border: 1px solid #e0e3e7;
+
+    &:hover {
+      background-color: #f8f9fa;
+      color: #3498db;
+      border-color: #3498db;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: static; /* remove fixed positioning on smaller screens */
+    width: 100%;
+    margin-bottom: 2rem;
+    transform: none;
+  }
+}

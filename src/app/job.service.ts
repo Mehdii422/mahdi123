@@ -1,12 +1,21 @@
     import { Injectable } from "@angular/core";
     import { JobOffers } from "./job-offers";
-    
-    @Injectable({
-        providedIn: 'root'
-    })
 
+    export interface FilterCriteria {
+        nom?: string;
+        domain?: string;
+        partTime?: boolean;
+        governorat?: string;
+        employment?: string[]; // e.g., ['full-time', 'part-time']
+        // Vous pouvez ajouter d'autres critères ici
+      }
+
+      @Injectable({
+        providedIn: 'root'
+      })
+      
     export class JobService {
-        protected jobOffersList: JobOffers[] = [
+      protected jobOffersList: JobOffers[] = [
             {
             id: 0,
             nom: 'Assistant médical',
@@ -16,7 +25,13 @@
             encore_valable: true,
             part_time: true,
             domain: 'Santé',
-            description: 'rabi ijib el 9esm'
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 2,
+              name: 'Dr. Med',
+              phone: '0123456789',
+              chatId: 'chat-0'
+              }
             },
             {
             id: 1,
@@ -27,7 +42,13 @@
             encore_valable: false,
             part_time: true,
             domain: 'Hotels & Tourisme',
-            description: 'rabi ijib el 9esm'
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-1'
+              }
             },
             {
             id: 2,
@@ -38,7 +59,13 @@
             encore_valable: false,
             part_time: true,
             domain: 'Web',
-            description: 'rabi ijib el 9esm'
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 1,
+              name: 'ing M',
+              phone: '0123456790',
+              chatId: 'chat-2'
+            }
         
             },
             {
@@ -50,8 +77,13 @@
             encore_valable: true,
             part_time: false,
             domain: 'commerce',
-            description: 'rabi ijib el 9esm'
-        
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-3'
+              }        
             },
             {
             id: 4,
@@ -62,8 +94,13 @@
             encore_valable: true,
             part_time: false,
             domain: 'Commerce',
-            description: 'rabi ijib el 9esm'
-        
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-4'
+              }        
             },
             {
             id: 5,
@@ -74,7 +111,13 @@
             encore_valable: true,
             part_time: false,
             domain: 'Education',
-            description: 'rabi ijib el 9esm'
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 2,
+              name: 'Dr. Med',
+              phone: '0123456790',
+              chatId: 'chat-5'
+              }
             },
             {
             id: 6,
@@ -85,7 +128,13 @@
             encore_valable: true,
             part_time: false,
             domain: 'Commerce',
-            description: 'rabi ijib el 9esm'
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-6'
+            }
             },
             {
             id: 7,
@@ -96,7 +145,13 @@
             encore_valable: true,
             part_time: true,
             domain: 'Web',
-            description: 'rabi ijib el 9esm'
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 1,
+              name: 'ing M',
+              phone: '0123456790',
+              chatId: 'chat-7'
+            }
             },
             {
             id: 8,
@@ -107,7 +162,13 @@
             encore_valable: false,
             part_time: true,
             domain: 'Transport',
-            description: 'rabi ijib el 9esm'
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-8'
+            }
         
             },
             {
@@ -119,7 +180,13 @@
             encore_valable: true,
             part_time: true,
             domain: 'Commerce',
-            description: 'rabi ijib el 9esm'
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 1,
+              name: 'ing M',
+              phone: '0123456790',
+              chatId: 'chat-9'
+            }
             },
             {
             id: 10,
@@ -130,7 +197,13 @@
             encore_valable: true,
             part_time: false,
             domain: 'Santé',
-            description: 'rabi ijib el 9esm'
+            description: 'rabi ijib el 9esm',
+            entrepreneur: {
+              id: 2,
+              name: 'Dr. Med',
+              phone: '0123456790',
+              chatId: 'chat-10'
+            }
             },
             {
             id: 11,
@@ -141,7 +214,13 @@
             encore_valable: true,
             part_time: false,
             domain: 'Agriculture',
-            description: 'Travailler dans les champs et s’occuper de la récolte.'
+            description: 'Travailler dans les champs et s’occuper de la récolte.',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-11'
+            }
             },
             {
             id: 12,
@@ -152,7 +231,13 @@
             encore_valable: true,
             part_time: false,
             domain: 'Metal Production',
-            description: 'Assembler et souder des structures métalliques.'
+            description: 'Assembler et souder des structures métalliques.',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-12'
+            }
             },
             {
             id: 13,
@@ -163,7 +248,13 @@
             encore_valable: true,
             part_time: true,
             domain: 'Commerce',
-            description: 'Accueillir les clients et gérer la caisse dans un magasin.'
+            description: 'Accueillir les clients et gérer la caisse dans un magasin.',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-13'
+            }
             },
             {
             id: 14,
@@ -174,7 +265,13 @@
             encore_valable: false,
             part_time: false,
             domain: 'Construction',
-            description: 'Participer à la construction de bâtiments et ouvrages.'
+            description: 'Participer à la construction de bâtiments et ouvrages.',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-14'
+            }
             },
             {
             id: 15,
@@ -185,7 +282,13 @@
             encore_valable: true,
             part_time: false,
             domain: 'Hotels & Tourism',
-            description: 'Accueillir les clients et gérer les réservations dans un hôtel.'
+            description: 'Accueillir les clients et gérer les réservations dans un hôtel.',
+            entrepreneur: {
+              id: 1,
+              name: 'ing M',
+              phone: '0123456790',
+              chatId: 'chat-15'
+            }
             },
             {
             id: 16,
@@ -196,7 +299,13 @@
             encore_valable: true,
             part_time: true,
             domain: 'Education',
-            description: 'Enseigner l’anglais à des élèves de différents niveaux.'
+            description: 'Enseigner l’anglais à des élèves de différents niveaux.',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-16'
+            }
             },
             {
             id: 17,
@@ -207,7 +316,13 @@
             encore_valable: true,
             part_time: false,
             domain: 'Financial Services',
-            description: 'Gérer la comptabilité et les finances de l’entreprise.'
+            description: 'Gérer la comptabilité et les finances de l’entreprise.',
+            entrepreneur: {
+              id: 0,
+              name: 'Chef K',
+              phone: '0123456790',
+              chatId: 'chat-17'
+            }
             },
             {
             id: 18,
@@ -218,16 +333,231 @@
             encore_valable: true,
             part_time: true,
             domain: 'Transport',
-            description: 'Transporter des marchandises ou des passagers en toute sécurité.'
+            description: 'Transporter des marchandises ou des passagers en toute sécurité.',
+            entrepreneur: {
+              id: 2,
+              name: 'Dr. Med',
+              phone: '0123456790',
+              chatId: 'chat-18'
+            }
             }
         ];
 
-    getAllJobOffers(): JobOffers[] {
+      private lastId = Math.max(...this.jobOffersList.map(offer => offer.id));
+      private jobOffers: JobOffers[] = [];
+
+      constructor() {
+        // Initialize from localStorage if needed
+        const storedJobs = localStorage.getItem('jobOffers');
+        if (storedJobs) {
+          this.jobOffers = JSON.parse(storedJobs);
+        }
+      }
+
+      getAllJobOffers(): JobOffers[] {
+        // Return all job offers from the jobOffersList
         return this.jobOffersList;
+      }
+
+      deleteJob(jobId: number, entrepreneurId: number): {success: boolean, message: string} {
+        // Check both data sources for the job
+        const memoryIndex = this.jobOffersList.findIndex(offer => 
+          offer.id === jobId && 
+          offer.entrepreneur && 
+          (offer.entrepreneur.id === entrepreneurId || 
+           offer.entrepreneur.name.toLowerCase() === 'chefk' ||
+           offer.entrepreneur.name.toLowerCase() === 'drmed' ||
+           offer.entrepreneur.name.toLowerCase() === 'ingm')
+        );
+        const storageIndex = this.jobOffers.findIndex(offer => 
+          offer.id === jobId && 
+          offer.entrepreneur && 
+          (offer.entrepreneur.id === entrepreneurId || 
+           offer.entrepreneur.name.toLowerCase() === 'chefk' ||
+           offer.entrepreneur.name.toLowerCase() === 'drmed' ||
+           offer.entrepreneur.name.toLowerCase() === 'ingm')
+        );
+
+        if (memoryIndex === -1 && storageIndex === -1) {
+          return {success: false, message: 'Job offer not found or not authorized to delete'};
+        }
+
+        // Prevent deletion if it would go below minimum jobs
+        if (this.getJobCountByEntrepreneur(entrepreneurId) <= 3) {
+          return {success: false, message: 'Cannot delete - entrepreneur must maintain at least 3 active job offers'};
+        }
+
+        // Remove from both data sources
+        this.jobOffersList = this.jobOffersList.filter(job => job.id !== jobId);
+        this.jobOffers = this.jobOffers.filter(job => job.id !== jobId);
+        localStorage.setItem('jobOffers', JSON.stringify(this.jobOffers));
+        
+        return {success: true, message: 'Job offer deleted successfully'};
+      }
+
+      updateJobOffer(updatedOffer: JobOffers, entrepreneurId: number): {success: boolean, message: string} {
+        // Check both data sources for the job
+        const memoryIndex = this.jobOffersList.findIndex(offer => 
+          offer.id === updatedOffer.id && 
+          offer.entrepreneur && 
+          (offer.entrepreneur.id === entrepreneurId || 
+           offer.entrepreneur.name.toLowerCase() === 'chefk' ||
+           offer.entrepreneur.name.toLowerCase() === 'drmed' ||
+           offer.entrepreneur.name.toLowerCase() === 'ingm')
+        );
+        const storageIndex = this.jobOffers.findIndex(offer => 
+          offer.id === updatedOffer.id && 
+          offer.entrepreneur && 
+          (offer.entrepreneur.id === entrepreneurId || 
+           offer.entrepreneur.name.toLowerCase() === 'chefk' ||
+           offer.entrepreneur.name.toLowerCase() === 'drmed' ||
+           offer.entrepreneur.name.toLowerCase() === 'ingm')
+        );
+        
+        if (memoryIndex === -1 && storageIndex === -1) {
+          return {success: false, message: 'Job offer not found or not owned by entrepreneur'};
+        }
+
+        // Update in both data sources if found
+        if (memoryIndex !== -1) {
+          this.jobOffersList[memoryIndex] = updatedOffer;
+        }
+        if (storageIndex !== -1) {
+          this.jobOffers[storageIndex] = updatedOffer;
+          localStorage.setItem('jobOffers', JSON.stringify(this.jobOffers));
         }
         
-    getJobOffersByID(id: number): JobOffers | undefined {
-        return this.jobOffersList.find(offer => offer.id === id);
+        return {success: true, message: 'Job offer updated successfully'};
+      }
+
+      generateChatId(): string {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+      }
+
+      getJobOffersByEntrepreneur(entrepreneurId: number): JobOffers[] {
+          const memoryJobs = this.jobOffersList.filter(offer => 
+            offer.entrepreneur && 
+            (offer.entrepreneur.id === entrepreneurId ||
+             offer.entrepreneur.name.toLowerCase() === 'chefk' ||
+             offer.entrepreneur.name.toLowerCase() === 'drmed' ||
+             offer.entrepreneur.name.toLowerCase() === 'ingm')
+          );
+          const storageJobs = this.jobOffers.filter(offer => 
+            offer.entrepreneur && 
+            (offer.entrepreneur.id === entrepreneurId ||
+             offer.entrepreneur.name.toLowerCase() === 'chefk' ||
+             offer.entrepreneur.name.toLowerCase() === 'drmed' ||
+             offer.entrepreneur.name.toLowerCase() === 'ingm')
+          );
+          return [...memoryJobs, ...storageJobs];
+      }
+          
+      getJobOffersByID(id: number): JobOffers | undefined {
+        return this.jobOffers.find(job => job.id === id);
+          }
+
+      getAllJobDomains(): string[] {
+        return [...new Set(this.jobOffersList.map(job => job.domain))];
+      }
+
+      filterJobOffers(criteria: FilterCriteria): JobOffers[] {
+        return this.jobOffersList.filter(offer => {
+          // Name filtering (case insensitive partial match)
+          if (criteria.nom && 
+              !offer.nom.toLowerCase().includes(criteria.nom.toLowerCase())) {
+            return false;
+          }
+          
+          // Domain filtering (case insensitive exact match)
+          if (criteria.domain && 
+              offer.domain.toLowerCase() !== criteria.domain.toLowerCase()) {
+            return false;
+          }
+          
+          // Part-time filtering
+          if (criteria.partTime !== undefined && 
+              offer.part_time !== criteria.partTime) {
+            return false;
+          }
+          
+          // Governorat filtering (case insensitive exact match)
+          if (criteria.governorat && 
+              offer.governorat.toLowerCase() !== criteria.governorat.toLowerCase()) {
+            return false;
+          }
+          
+          return true;
+        });
+      }
+        
+      getJobCountByEntrepreneur(entrepreneurId: number): number {
+        const memoryCount = this.jobOffersList.filter(offer => 
+          offer.entrepreneur && 
+          (offer.entrepreneur.id === entrepreneurId ||
+           offer.entrepreneur.name.toLowerCase() === 'chefk' ||
+           offer.entrepreneur.name.toLowerCase() === 'drmed' ||
+           offer.entrepreneur.name.toLowerCase() === 'ingm')
+        ).length;
+        const storageCount = this.jobOffers.filter(offer => 
+          offer.entrepreneur && 
+          (offer.entrepreneur.id === entrepreneurId ||
+           offer.entrepreneur.name.toLowerCase() === 'chefk' ||
+           offer.entrepreneur.name.toLowerCase() === 'drmed' ||
+           offer.entrepreneur.name.toLowerCase() === 'ingm')
+        ).length;
+        return memoryCount + storageCount;
+      }
+
+      addJobOffer(newOffer: JobOffers): {success: boolean, message: string} {
+        try {
+          // Validate required fields
+          if (!newOffer.nom || !newOffer.lieu || !newOffer.governorat || !newOffer.domain) {
+            return {success: false, message: 'All required fields must be filled'};
+          }
+
+          // Check if entrepreneur exists and has minimum jobs
+          if (newOffer.entrepreneur && this.getJobCountByEntrepreneur(newOffer.entrepreneur.id) < 3) {
+            return {success: false, message: 'Entrepreneur must have at least 3 active job offers'};
+          }
+      
+          // Generate unique ID
+          this.lastId++;
+          newOffer.id = this.lastId;
+              
+          // Set default photo if not provided
+          if (!newOffer.photo) {
+            newOffer.photo = '/assets/default-job.jpg';
+          }
+
+          try {
+            if (!newOffer.entrepreneur) {
+              throw new Error('Entrepreneur information is required');
+            }
+            
+            newOffer.id = this.jobOffers.length + 1;
+            this.jobOffers.push(newOffer);
+            localStorage.setItem('jobOffers', JSON.stringify(this.jobOffers));
+            return { success: true, message: 'Job posted successfully' };
+          } catch (error: unknown) {
+            if (error instanceof Error) {
+              return { success: false, message: error.message };
+            }
+            return { success: false, message: 'Unknown error occurred' };
+          }
+        
+          this.jobOffersList.push(newOffer);
+          return {success: true, message: 'Job posted successfully'};
+        } catch (error) {
+          console.error('Error posting job:', error);
+          return {success: false, message: 'An error occurred while posting the job'};
         }
-    }
+      }
     
+          
+      applicationMessage: string = '';
+  
+      submitApplication(firstName: string, lastName: string, email: string) {
+        console.log(`Application submitted by ${firstName} ${lastName} at ${email}`);
+      }        
+    } 
+      

@@ -1,0 +1,78 @@
+.offers-container {
+  margin: 2rem auto;
+  padding: 0 1rem;
+  max-width: 1200px;
+
+  .title {
+    font-size: 1.5rem;
+    color: #156fa6fe;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+  .job-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      padding: 0;
+    }
+  }
+
+  .job-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      padding: 1rem;
+    }
+
+    .job-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    p {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: #666;
+
+      strong {
+        color: #333;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// Ensure content starts below fixed header
+.offers-container {
+  margin-top: 80px;
+
+  @media (max-width: 768px) {
+    margin-top: 120px;
+  }
+}

@@ -8,4 +8,10 @@ export interface JobOffers {
     part_time: boolean;
     domain: string;
     description: string;
-}
+    entrepreneur: {
+        id: number;
+        name: string;
+        phone: string;
+        chatId: string;
+      };
+    }

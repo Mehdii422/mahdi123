@@ -1,0 +1,81 @@
+/* Container for the entire section */
+.categories-section {
+    background-color: #f0f0f0; /* Light gray background to match the screenshot */
+    padding: 70px 1rem;
+    text-align: center;
+    font-family: sans-serif;
+  }
+  
+  /* Title and subtitle styling */
+  .categories-title {
+    padding-bottom: 20px;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .categories-subtitle {
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  
+  /* Grid layout for category cards */
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto; /* Center the grid within the page */
+  }
+  
+  /* Individual category card styling */
+  .category-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 2rem 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  /* Add a slight "lift" on hover */
+  .category-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Icon styling */
+  .category-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
+  }
+  
+  /* Category name and job count */
+  .category-name {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .category-jobs {
+    color: #777;
+  }
+  
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 992px) {
+    .categories-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .categories-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
