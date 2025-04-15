@@ -556,8 +556,32 @@
           
       applicationMessage: string = '';
   
-      submitApplication(firstName: string, lastName: string, email: string) {
-        console.log(`Application submitted by ${firstName} ${lastName} at ${email}`);
+      submitApplication(jobId: number, userId: number, firstName: string, lastName: string, email: string): {success: boolean, message: string} {
+        try {
+          const applications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+          
+          // Check if user already applied
+          if (applications.some((app: any) => app.jobId === jobId && app.userId === userId)) {
+            return {success: false, message: 'You have already applied to this job'};
+          }
+
+          const newApplication = {
+            jobId,
+            userId,
+            firstName,
+            lastName, 
+            email,
+            applicationDate: new Date().toISOString()
+          };
+
+          applications.push(newApplication);
+          localStorage.setItem('jobApplications', JSON.stringify(applications));
+          
+          return {success: true, message: 'Application submitted successfully'};
+        } catch (error) {
+          console.error('Error submitting application:', error);
+          return {success: false, message: 'Failed to submit application'};
+        }
       }        
     } 
       

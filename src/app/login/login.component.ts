@@ -49,18 +49,26 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       const user: BaseUser | null = this.authService.validateCredentials(email, password);
+
+      // before : if (user) {
+        // Save user data in localStorage manually
+        //localStorage.setItem('currentUser', JSON.stringify(user));
+        //this.successMessage = 'Login successful! Redirecting...';
+        //this.errorMessage = '';
+        // Redirect to home page
+        //setTimeout(() => this.router.navigate(['']), 1500);}
+
       if (user) {
-        // Save user data in localStorage so header can display the logged-in info
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        
+        // Use the AuthService login method to update localStorage and observables
+        this.authService.login(user);
         this.successMessage = 'Login successful! Redirecting...';
         this.errorMessage = '';
-        // Redirect to home page (mapped to '')
         setTimeout(() => this.router.navigate(['']), 1500);
+    }
+    
       } else {
         this.errorMessage = 'Invalid email or password.';
         this.successMessage = '';
-      }
     }
   }
   

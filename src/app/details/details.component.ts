@@ -5,6 +5,7 @@ import { JobService } from '../job.service';
 import { JobOffers } from '../job-offers';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-details',
@@ -16,7 +17,7 @@ import { RouterModule } from '@angular/router';
       </section>
 
       <div class="listing-photo-flex">
-        <img *ngIf="JobOffers?.photo" [src]="JobOffers?.photo" [alt]="JobOffers?.nom">
+        <img  *ngIf="JobOffers?.photo" [src]="JobOffers?.photo" [alt]="JobOffers?.nom">
       </div>
  
       <div class="details-grid">
@@ -34,7 +35,8 @@ import { RouterModule } from '@angular/router';
         
       <!-- Listing-apply section -->
       <section class="listing-apply">
-        <ng-container *ngIf="userType === 'etudiant' || userType === 'jobseeker'; else notStudentOrJobseeker">
+      <ng-container *ngIf="(userType === 'etudiant' || userType === 'jobseeker'); else notStudentOrJobseeker">
+
           <!-- A simple button to apply -->
           <button (click)="submitApplication()" class="primary">Postuler</button>
 
@@ -42,8 +44,10 @@ import { RouterModule } from '@angular/router';
             <h3>Détails de l'entrepreneur</h3>
             <p><strong>Nom:</strong> {{ JobOffers?.entrepreneur?.name }}</p>
             <p><strong>Téléphone:</strong> {{ JobOffers?.entrepreneur?.phone }}</p>
-            <button (click)="openChat()">Chat avec l'entrepreneur</button>
           </div>
+
+          <button (click)="openChat()">Chat avec l'entrepreneur</button>
+
         </ng-container>
 
         <ng-template #notStudentOrJobseeker>
@@ -89,8 +93,7 @@ export class DetailsComponent implements OnInit {
   isJobOwner: boolean = false;
   user: any;
 
-  // Simulate a logged-in user; replace with your actual authentication logic.
-  userIsLogged: boolean = true;
+  private authService = inject(AuthService);
 
   applicationMessage: string = '';
 
@@ -117,28 +120,61 @@ export class DetailsComponent implements OnInit {
     const jobOfferId = Number(this.route.snapshot.params['id']);
     this.JobOffers = this.JobService.getJobOffersByID(jobOfferId);
 
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser) {
-      this.user = JSON.parse(storedUser);
-      this.userType = this.user.type;
+    //this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      //const storedUser = localStorage.getItem('currentUser');
+      //if (storedUser && isLoggedIn) {
+        //this.user = JSON.parse(storedUser);
+        //this.userType = this.user.type.toLowerCase(); // Case-insensitive check
 
-      if (this.userType === 'entrepreneur' && this.JobOffers?.entrepreneur) {
-        this.isJobOwner = this.user.id === this.JobOffers.entrepreneur.id;}
-    }
+        //if (this.userType === 'entrepreneur' && this.JobOffers?.entrepreneur) {
+          //this.isJobOwner = this.user.id === this.JobOffers.entrepreneur.id;
+        //}
+      //}
+
+      this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+        if (isLoggedIn) {
+            const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                this.user = JSON.parse(storedUser);
+                this.userType = this.user.type.toLowerCase();
+                this.userType = (this.user.type || '').toLowerCase();
+                if (this.userType === 'entrepreneur' && this.JobOffers?.entrepreneur) {
+                    this.isJobOwner = this.user.id === this.JobOffers.entrepreneur.id;
+                }
+            }
+        } else {
+            this.user = null;
+            this.userType = '';
+            this.isJobOwner = false;
+        }
+      console.log('User:', this.user);
+      console.log('User type (lowercased):', this.userType);
+
+    });
   }
   
   submitApplication(): void {
-    // Customize the application submission as necessary.
-    this.JobService.submitApplication('dummy', 'dummy', 'dummy@example.com');
-    this.applicationMessage = 'Votre candidature a bien été envoyée!';
+    if (!this.JobOffers || !this.user) return;
+    
+    const result = this.JobService.submitApplication(
+      this.JobOffers.id,
+      this.user.id,
+      this.user.firstName || 'Unknown',
+      this.user.lastName || 'User',
+      this.user.email || 'no-email@example.com'
+    );
+    this.applicationMessage = result.message;
   }
 
   openChat(): void {
-    if (this.JobOffers?.entrepreneur?.chatId) {
-      console.log(`Opening chat with ${this.JobOffers.entrepreneur.name} (chat id: ${this.JobOffers.entrepreneur.chatId})`);
-      this.router.navigate(['/chat', this.JobOffers.entrepreneur.chatId]);
-    } else {
-      console.warn('Chat ID is not available.');
-    }
+    //if (this.JobOffers?.entrepreneur?.chatId) {
+      //console.log(`Opening chat with ${this.JobOffers.entrepreneur.name} (chat id: ${this.JobOffers.entrepreneur.chatId})`);
+      //this.router.navigate(['/chat', this.JobOffers.entrepreneur.chatId]);
+    //} else {
+      //console.warn('Chat ID is not available.');
+    //}
+    const chatId = this.JobOffers?.entrepreneur?.chatId || this.JobOffers?.id || 'default-chat';
+    console.log(`Opening chat (chat id: ${chatId})`);
+    this.router.navigate(['/chat', chatId]);
   }
 }

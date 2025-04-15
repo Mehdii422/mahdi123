@@ -271,12 +271,10 @@ export class RegisterComponent {
       section: [''],
       degree: [''],
       availability: this.fb.array(
-        this.weekDays.map(() =>
-          this.fb.group({
-            start: [''],
-            end: ['']
-          })
-        )
+        this.weekDays.map(() => this.fb.group({
+          start: [''],
+          end: ['']
+        }))
       ),
       speciality: [''],
       formationType: [''],

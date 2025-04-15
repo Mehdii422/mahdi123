@@ -15,6 +15,7 @@ export interface Etudiant extends BaseUser {
   username: string;
   firstName: string;
   birthdate: string;
+  
   phone: string;
   address: string;
   scheduleOption: 'fill' | 'import';
