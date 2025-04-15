@@ -107,63 +107,57 @@ export class DetailsComponent implements OnInit {
 
   deleteJob(): void {
     if (this.JobOffers && confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')) {
-      const result = this.JobService.deleteJob(this.JobOffers.id, this.user?.id || 0);
-      if (result.success) {
-        this.router.navigate(['/']);
-      } else {
-        alert(result.message);
-      }
+      this.JobService.deleteJob(this.JobOffers.id).subscribe({
+        next: () => {
+          this.router.navigate(['/']);
+        },
+        error: (err) => {
+          alert('Erreur lors de la suppression de l\'offre : ' + (err.error?.message || err.message || 'Erreur inconnue'));
+        }
+      });
     }
   }
 
   ngOnInit(): void {
     const jobOfferId = Number(this.route.snapshot.params['id']);
-    this.JobOffers = this.JobService.getJobOffersByID(jobOfferId);
-
-    //this.authService.isLoggedIn$.subscribe(isLoggedIn => {
-      //const storedUser = localStorage.getItem('currentUser');
-      //if (storedUser && isLoggedIn) {
-        //this.user = JSON.parse(storedUser);
-        //this.userType = this.user.type.toLowerCase(); // Case-insensitive check
-
-        //if (this.userType === 'entrepreneur' && this.JobOffers?.entrepreneur) {
-          //this.isJobOwner = this.user.id === this.JobOffers.entrepreneur.id;
-        //}
-      //}
-
-      this.authService.isLoggedIn$.subscribe(isLoggedIn => {
-        if (isLoggedIn) {
-            const storedUser = localStorage.getItem('currentUser');
-            if (storedUser) {
-                this.user = JSON.parse(storedUser);
-                this.userType = this.user.type.toLowerCase();
-                this.userType = (this.user.type || '').toLowerCase();
-                if (this.userType === 'entrepreneur' && this.JobOffers?.entrepreneur) {
-                    this.isJobOwner = this.user.id === this.JobOffers.entrepreneur.id;
-                }
-            }
-        } else {
-            this.user = null;
-            this.userType = '';
-            this.isJobOwner = false;
+    this.JobService.getJobOffersByID(jobOfferId).subscribe({
+      next: (job) => {
+        this.JobOffers = job;
+        if (this.userType === 'entrepreneur' && this.JobOffers?.entrepreneur) {
+          this.isJobOwner = this.user?.id === this.JobOffers.entrepreneur.id;
         }
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement de l\'offre:', err);
+      }
+    });
+
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+          const storedUser = localStorage.getItem('currentUser');
+          if (storedUser) {
+              this.user = JSON.parse(storedUser);
+              this.userType = this.user.type.toLowerCase();
+              if (this.userType === 'entrepreneur' && this.JobOffers?.entrepreneur) {
+                  this.isJobOwner = this.user.id === this.JobOffers.entrepreneur.id;
+              }
+          }
+      } else {
+          this.user = null;
+          this.userType = '';
+          this.isJobOwner = false;
+      }
       console.log('User:', this.user);
       console.log('User type (lowercased):', this.userType);
-
     });
   }
   
   submitApplication(): void {
     if (!this.JobOffers || !this.user) return;
-    
-    const result = this.JobService.submitApplication(
-      this.JobOffers.id,
-      this.user.id,
-      this.user.firstName || 'Unknown',
-      this.user.lastName || 'User',
-      this.user.email || 'no-email@example.com'
-    );
-    this.applicationMessage = result.message;
+
+    // TODO: Implement application submission via backend API
+    // For now, show a placeholder message
+    this.applicationMessage = 'La fonctionnalité de candidature est en cours de développement.';
   }
 
   openChat(): void {
