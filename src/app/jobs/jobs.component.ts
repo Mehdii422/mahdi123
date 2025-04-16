@@ -27,9 +27,9 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
             <a [routerLink]="['/details', job.id]">
               <img [src]="job.photo" alt="{{ job.nom }}" class="job-image">
               <h3>{{ job.nom }}</h3>
-              <p><strong>Location:</strong> {{ job.lieu }}</p>
-              <p><strong>For Students:</strong> {{ job.part_time ? 'Yes' : 'No' }}</p>
-              <p><strong>Domain:</strong> {{ job.domain }}</p>
+              <p><strong>Lieu:</strong> {{ job.lieu }}</p>
+              <p><strong>Pour étudiants:</strong> {{ job.part_time ? 'Oui' : 'Non' }}</p>
+              <p><strong>Domaine:</strong> {{ job.domain }}</p>
             </a>
           </div>
         </div>
@@ -49,13 +49,18 @@ export class JobsComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (params['search']) {
-        this.jobOffers = this.jobService.filterJobOffers({
+        this.jobService.filterJobOffers({
           nom: params['search']
+        }).subscribe(jobs => {
+          this.jobOffers = jobs;
+          this.filteredOffers = [...this.jobOffers];
         });
       } else {
-        this.jobOffers = this.jobService.getAllJobOffers();
+        this.jobService.getAllJobOffers().subscribe(jobs => {
+          this.jobOffers = jobs;
+          this.filteredOffers = [...this.jobOffers];
+        });
       }
-      this.filteredOffers = [...this.jobOffers];
     });
   }
 

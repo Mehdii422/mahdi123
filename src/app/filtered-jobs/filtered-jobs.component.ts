@@ -39,23 +39,24 @@ export class FilteredJobsComponent implements OnInit {
   ngOnInit(): void {
     this.domain = this.route.snapshot.params['domain'];
     console.log('Received domain parameter:', this.domain);
-    
-    const allJobs = this.jobService.getAllJobOffers();
-    console.log('All job domains:', [...new Set(allJobs.map(j => j.domain))]);
-    
+
     const criteria: FilterCriteria = { domain: this.domain };
-    this.filteredJobs = this.jobService.filterJobOffers(criteria);
-    console.log('Filter results:', this.filteredJobs);
-    console.log('Route parameters:', this.route.snapshot.params);
-    console.log('All domains:', [...new Set(this.jobService.getAllJobOffers().map(j => j.domain))]);
+    this.jobService.filterJobOffers(criteria).subscribe(jobs => {
+      this.filteredJobs = jobs;
+      console.log('Filter results:', this.filteredJobs);
+    });
 
     this.route.queryParams.subscribe(params => {
       if (params['search']) {
         const criteria: FilterCriteria = { nom: params['search'] };
-        this.filteredJobs = this.jobService.filterJobOffers(criteria);
+        this.jobService.filterJobOffers(criteria).subscribe(jobs => {
+          this.filteredJobs = jobs;
+        });
       } else if (this.route.snapshot.params['domain']) {
         const criteria: FilterCriteria = { domain: this.route.snapshot.params['domain'] };
-        this.filteredJobs = this.jobService.filterJobOffers(criteria);
+        this.jobService.filterJobOffers(criteria).subscribe(jobs => {
+          this.filteredJobs = jobs;
+        });
       }
     });
   }

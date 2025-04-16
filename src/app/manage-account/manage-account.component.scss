@@ -1,6 +1,6 @@
 .manage-account {
     max-width: 600px;
-    margin: 2rem auto;
+    margin: 5rem auto 2rem auto; /* 👈 Add top margin to clear fixed header */
     padding: 1.5rem;
     background-color: #fff;
     border-radius: 8px;
@@ -24,10 +24,13 @@
     flex: 1;
     padding: 0.7rem;
     border: none;
-    background-color: #f0f0f0;
+    background-color: #dcdcdc;
     cursor: pointer;
     transition: background-color 0.2s;
     border-bottom: 2px solid transparent;
+  }
+  .tabs button:hover {
+    background-color: #9d9ebe; /* 👈 on hover, even lighter */
   }
   .tabs button.active {
     background-color: #007bff;

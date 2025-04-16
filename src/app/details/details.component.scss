@@ -1,224 +1,75 @@
-:host {
-  display: block;
-  padding-top: 80px;
-}
-
-/* Main card */
-article {
-  max-width: 1100px;
-  margin: 2rem auto;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  padding: 2rem;
-  position: relative;
-}
-
-/* Heading section */
-.listing-feature {
-  text-align: center;
-  margin-bottom: 2rem;
-
-  .section-heading {
-    font-size: 2.5rem;
-    color: #333;
-    margin: 0;
-    font-weight: 600;
-  }
-}
-
-/* Centered image */
-.listing-photo-flex {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
-
-  img.listing-photo {
-    width: 80%;
-    max-width: 600px;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-}
-
-/* === FLEX WRAPPER FOR DESCRIPTION + FORM === */
-.details-grid {
-  display: flex;
-  gap: 2rem;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-
-  /* Each column */
-  .listing-description, .listing-apply {
-    flex: 1;
-    background-color: #fafafa;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    min-width: 0;
-  }
-}
-
-/* Description section */
-.listing-description {
-  text-align: center;
-
-  .listing-heading {
-    font-size: 2rem;
-    color: #007bff;
-    margin-bottom: 1rem;
-    font-weight: 500;
-  }
-
-  .listing-location {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 0.75rem;
-
-    &.available {
-      font-weight: 500;
-    }
-
-    &.decription {
-      line-height: 1.6;
-    }
-  }
-}
-
-/* Apply form section */
-.listing-apply {
-  fieldset {
-    border: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .section-heading {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #333;
-    text-align: left;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    label {
-      font-weight: 600;
-      color: #444;
-    }
-
-    input {
-      padding: 0.75rem;
-      font-size: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      width: 100%;
-      transition: border-color 0.3s ease;
-
-      &:focus {
-        border-color: #007bff;
-        outline: none;
-      }
-    }
-
-    button.primary {
-      padding: 0.85rem;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: #0056b3;
-      }
-      &:disabled {
-        background-color: #ccc;
-        cursor: not-allowed;
-      }
-    }
-  }
-
-  .success-message {
-    margin-top: 1rem;
-    text-align: center;
-    color: #28a745;
-    font-size: 1.1rem;
-    font-weight: bold;
-  }
-}
-
-.auth-prompts {
-  margin: 1rem 0;
-  padding: 1rem;
-  background: #f8f9fa;
+.primary {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 0.5em 1.2em;
+  font-size: 1rem;
   border-radius: 4px;
-  text-align: center;
-
-  p {
-    color: #6c757d;
-    margin-bottom: 0;
-  }
-}
-
-.login-link {
-  color: #007bff;
-  font-weight: 500;
-  text-decoration: underline;
   cursor: pointer;
-
-  &:hover {
-    color: #0056b3;
-  }
+  transition: background-color 0.3s ease;
+  margin: 0.3em 0.5em 0.3em 0;
 }
 
-.register-link {
-  color: #28a745;
-  font-weight: 500;
-  text-decoration: underline;
-  cursor: pointer;
-
-  &:hover {
-    color: #1e7e34;
-  }
+.primary:hover {
+  background-color: #0056b3;
 }
 
-.owner-message {
-  color: #6c757d;
-  font-style: italic;
-  padding: 1rem;
-  background: #f8f9fa;
+.edit-button {
+  background-color: #28a745;
+  border: none;
+  color: white;
+  padding: 0.5em 1.2em;
+  font-size: 1rem;
   border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0.3em 0.5em 0.3em 0;
 }
 
-/* Responsive: stack description and form vertically */
-@media (max-width: 768px) {
-  .details-grid {
-    flex-direction: column;
-  }
+.edit-button:hover {
+  background-color: #1e7e34;
+}
 
-  .listing-description,
-  .listing-apply {
-    padding: 1rem;
-  }
+.delete-button {
+  background-color: #dc3545;
+  border: none;
+  color: white;
+  padding: 0.5em 1.2em;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0.3em 0.5em 0.3em 0;
+}
 
-  .listing-description .listing-heading {
-    font-size: 1.5rem;
-  }
+.delete-button:hover {
+  background-color: #bd2130;
+}
+
+.chat-button {
+  background-color: #17a2b8;
+  border: none;
+  color: white;
+  padding: 0.5em 1.2em;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0.3em 0.5em 0.3em 0;
+}
+
+.chat-button:hover {
+  background-color: #117a8b;
+}
+
+.success-message {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+  padding: 0.75em 1.25em;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 1em auto 0 auto;
+  max-width: 400px;
+  text-align: center;
 }

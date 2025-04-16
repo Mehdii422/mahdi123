@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { JobOffers } from './job-offers';
 
 export interface FilterCriteria {
@@ -24,22 +25,51 @@ export class JobService {
     return this.http.get<JobOffers[]>(this.apiUrl);
   }
 
+
   getJobOffersByID(id: number): Observable<JobOffers> {
-    return this.http.get<JobOffers>(`${this.apiUrl}/${id}`);
+    return this.http.get<JobOffers>(this.apiUrl + '/' + id);
   }
 
-  addJobOffer(newOffer: JobOffers): Observable<any> {
-    return this.http.post(this.apiUrl, newOffer);
+  addJobOffer(newOffer: JobOffers): Observable<JobOffers> {
+    return this.http.post<JobOffers>(this.apiUrl, newOffer);
   }
 
-  updateJobOffer(updatedOffer: JobOffers): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${updatedOffer.id}`, updatedOffer);
+  updateJobOffer(updatedOffer: JobOffers): Observable<JobOffers> {
+    return this.http.put<JobOffers>(this.apiUrl + '/' + updatedOffer.id, updatedOffer);
   }
 
-  deleteJob(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  deleteJob(id: number): Observable<void> {
+    return this.http.delete<void>(this.apiUrl + '/' + id);
   }
 
-  // Additional methods can be added here for filtering, applications, etc.
+  filterJobOffers(criteria: FilterCriteria): Observable<JobOffers[]> {
+    return this.getAllJobOffers().pipe(
+      map(jobs => jobs.filter(job => {
+        let matches = true;
+        if (criteria.nom) {
+          matches = matches && job.nom.toLowerCase().includes(criteria.nom.toLowerCase());
+        }
+        if (criteria.domain) {
+          matches = matches && job.domain.toLowerCase() === criteria.domain.toLowerCase();
+        }
+        if (criteria.partTime !== undefined) {
+          matches = matches && job.part_time === criteria.partTime;
+        }
+        if (criteria.governorat) {
+          matches = matches && job.governorat.toLowerCase() === criteria.governorat.toLowerCase();
+        }
+        return matches;
+      }))
+    );
+  }
+
+  getJobOffersByEntrepreneur(userId: number): Observable<JobOffers[]> {
+    return this.getAllJobOffers().pipe(
+      map(jobs => jobs.filter(job => job.entrepreneur?.id === userId))
+    );
+  }
+
+  generateChatId(): string {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+  }
 }
-      

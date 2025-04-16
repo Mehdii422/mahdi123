@@ -12,7 +12,7 @@ import { HeaderComponent } from './header/header.component';
       <router-outlet></router-outlet>
     </main>
   `,
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'tadbiras';

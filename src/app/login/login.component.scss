@@ -1,7 +1,7 @@
 /* login.component.scss */
 .login-container {
     max-width: 400px;
-    margin: 3rem auto;
+    margin: 10rem auto;
     padding: 2rem;
     border-radius: 10px;
     background-color: #f9f9f9;
@@ -28,6 +28,7 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
   
       &:focus {
         outline: none;

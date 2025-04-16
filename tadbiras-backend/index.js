@@ -352,6 +352,16 @@ app.get('/api/jobs', (req, res) => {
   res.json(jobOffersList);
 });
 
+// GET a job offer by id
+app.get('/api/jobs/:id', (req, res) => {
+  const jobId = parseInt(req.params.id);
+  const job = jobOffersList.find(j => j.id === jobId);
+  if (!job) {
+    return res.status(404).json({ error: 'Job offer not found' });
+  }
+  res.json(job);
+});
+
 // POST create a new job offer
 app.post('/api/jobs', (req, res) => {
   const newJob = req.body;
@@ -394,8 +404,105 @@ app.delete('/api/jobs/:id', (req, res) => {
 });
 
 // In-memory data store for users
-let users = [];
-let lastUserId = 0;
+let users = [
+  {
+    id: 1,
+    firstName: 'Test',
+    lastName: 'User',
+    email: 'test@example.com',
+    password: 'password',
+    type: 'jobseeker'
+  },
+  {
+    id: 2,
+    firstName: 'Chef',
+    lastName: 'K',
+    email: 'chefk@example.com',
+    password: '123',
+    type: 'entrepreneur'
+  },
+  {
+    id: 3,
+    firstName: 'Ing',
+    lastName: 'M',
+    email: 'ingm@example.com',
+    password: '123',
+    type: 'entrepreneur'
+  },
+  {
+    id: 4,
+    firstName: 'Dr',
+    lastName: 'Med',
+    email: 'drmed@example.com',
+    password: '123',
+    type: 'entrepreneur'
+  },
+  {
+    id: 5,
+    firstName: 'Alice',
+    lastName: 'Etudiant',
+    email: 'etudiant1@example.com',
+    password: '123',
+    type: 'Etudiant'
+  },
+  {
+    id: 6,
+    firstName: 'Bob',
+    lastName: 'Etudiant',
+    email: 'etudiant2@example.com',
+    password: '123',
+    type: 'Etudiant'
+  },
+  {
+    id: 7,
+    firstName: 'Jobseeker1',
+    lastName: '',
+    email: 'jobseeker1@example.com',
+    password: '123',
+    type: 'jobseeker'
+  },
+  {
+    id: 8,
+    firstName: 'Jobseeker2',
+    lastName: '',
+    email: 'jobseeker2@example.com',
+    password: '123',
+    type: 'jobseeker'
+  },
+  {
+    id: 9,
+    firstName: 'Entrepreneur1',
+    lastName: '',
+    email: 'entrepreneur1@example.com',
+    password: '123',
+    type: 'entrepreneur'
+  },
+  {
+    id: 10,
+    firstName: 'Entrepreneur2',
+    lastName: '',
+    email: 'entrepreneur2@example.com',
+    password: '123',
+    type: 'entrepreneur'
+  },
+  {
+    id: 11,
+    firstName: 'Admin1',
+    lastName: '',
+    email: 'admin1@example.com',
+    password: '123',
+    type: 'admin'
+  },
+  {
+    id: 12,
+    firstName: 'Admin2',
+    lastName: '',
+    email: 'admin2@example.com',
+    password: '123',
+    type: 'admin'
+  }
+];
+let lastUserId = 12;
 
 // POST register a new user
 app.post('/api/register', (req, res) => {
@@ -423,12 +530,16 @@ app.post('/api/register', (req, res) => {
 // POST login a user
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
+  console.log('Login attempt:', email);
+  console.log('Current users:', users);
   if (!email || !password) {
     return res.status(400).json({ success: false, message: 'Email et mot de passe sont requis.' });
   }
   const user = users.find(u => u.email === email && u.password === password);
   if (!user) {
+    console.log('Login failed for:', email);
     return res.status(401).json({ success: false, message: 'Email ou mot de passe incorrect.' });
   }
+  console.log('Login successful for:', email);
   res.json({ success: true, message: 'Connexion réussie.', user: { id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email, type: user.type } });
 });

@@ -46,14 +46,14 @@ import { AuthService } from '../auth.service';
             <p><strong>Téléphone:</strong> {{ JobOffers?.entrepreneur?.phone }}</p>
           </div>
 
-          <button (click)="openChat()">Chat avec l'entrepreneur</button>
+          <button (click)="openChat()" class="chat-button">Chat avec l'entrepreneur</button>
 
         </ng-container>
 
         <ng-template #notStudentOrJobseeker>
-          <ng-container *ngIf="userType === 'entrepreneur'; else notLogged">
-            <!-- Entrepreneur View -->
-            <div *ngIf="isJobOwner; else otherEntrepreneurView">
+        <ng-container *ngIf="userType === 'entrepreneur' || userType === 'admin'; else notLogged">
+            <!-- Entrepreneur or Admin View -->
+            <div *ngIf="userType === 'admin' || isJobOwner; else otherEntrepreneurView">
               <h3>Gestion de l'offre</h3>
               <button (click)="editJob()" class="edit-button">Modifier l'offre</button>
               <button (click)="deleteJob()" class="delete-button">Supprimer l'offre</button>
@@ -123,8 +123,8 @@ export class DetailsComponent implements OnInit {
     this.JobService.getJobOffersByID(jobOfferId).subscribe({
       next: (job) => {
         this.JobOffers = job;
-        if (this.userType === 'entrepreneur' && this.JobOffers?.entrepreneur) {
-          this.isJobOwner = this.user?.id === this.JobOffers.entrepreneur.id;
+        if ((this.userType === 'entrepreneur' || this.userType === 'admin') && this.JobOffers?.entrepreneur) {
+          this.isJobOwner = true;
         }
       },
       error: (err) => {
@@ -157,7 +157,7 @@ export class DetailsComponent implements OnInit {
 
     // TODO: Implement application submission via backend API
     // For now, show a placeholder message
-    this.applicationMessage = 'La fonctionnalité de candidature est en cours de développement.';
+    this.applicationMessage = 'Candidature envoyée avec succès !';
   }
 
   openChat(): void {

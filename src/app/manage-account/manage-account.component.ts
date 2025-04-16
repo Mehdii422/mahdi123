@@ -273,7 +273,9 @@ export class ManageAccountComponent implements OnInit {
 
   loadMyJobs(): void {
     if (this.user?.id) {
-      this.myJobs = this.jobService.getJobOffersByEntrepreneur(this.user.id);
+      this.jobService.getJobOffersByEntrepreneur(this.user.id).subscribe((jobs: JobOffers[]) => {
+        this.myJobs = jobs;
+      });
     }
   }
 
@@ -284,12 +286,15 @@ export class ManageAccountComponent implements OnInit {
 
   deleteJob(jobId: number): void {
     if (confirm('Are you sure you want to delete this job offer?')) {
-      const result = this.jobService.deleteJob(jobId, this.user?.id || 0);
-      if (result.success) {
-        this.loadMyJobs();
-      } else {
-        alert(result.message);
-      }
+      this.jobService.deleteJob(jobId).subscribe({
+        next: () => {
+          this.loadMyJobs();
+        },
+        error: (err) => {
+          alert('Failed to delete job offer.');
+          console.error(err);
+        }
+      });
     }
   }
 
@@ -304,31 +309,33 @@ export class ManageAccountComponent implements OnInit {
       chatId: this.jobService.generateChatId()
     };
   
-    const result = this.jobService.addJobOffer(this.newOffer);
-    
-    if (result.success) {
-      this.postingStatus = {loading: false, message: result.message, isError: false};
-      this.newOffer = {
-        id: 0,
-        nom: '',
-        lieu: '',
-        governorat: '',
-        photo: '/assets/default-job.jpg',
-        encore_valable: true,
-        part_time: false,
-        domain: '',
-        description: '',
-        entrepreneur: {
+    this.jobService.addJobOffer(this.newOffer).subscribe({
+      next: (response) => {
+        this.postingStatus = {loading: false, message: 'Job offer added successfully!', isError: false};
+        this.newOffer = {
           id: 0,
-          name: '',
-          phone: '',
-          chatId: ''
-        }
-      };
-      this.router.navigate(['/']);
-    } else {
-      this.postingStatus = {loading: false, message: result.message, isError: true};
-    }
+          nom: '',
+          lieu: '',
+          governorat: '',
+          photo: '/assets/default-job.jpg',
+          encore_valable: true,
+          part_time: false,
+          domain: '',
+          description: '',
+          entrepreneur: {
+            id: 0,
+            name: '',
+            phone: '',
+            chatId: ''
+          }
+        };
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        this.postingStatus = {loading: false, message: 'Failed to add job offer.', isError: true};
+        console.error(err);
+      }
+    });
   }
   updateProfile(): void {
     localStorage.setItem('currentUser', JSON.stringify(this.user));

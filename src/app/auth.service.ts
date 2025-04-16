@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<{ success: boolean; message: string; user?: BaseUser }>(`${this.apiUrl}/login`, { email, password }).pipe(
+    return this.http.post<{ success: boolean; message: string; user?: BaseUser }>(this.apiUrl + '/login', { email, password }).pipe(
       tap(response => {
         if (response.success && response.user) {
           localStorage.setItem('currentUser', JSON.stringify(response.user));
@@ -51,6 +51,11 @@ export class AuthService {
     );
   }
 
+  validateCredentials(email: string, password: string): boolean {
+    // Simple validation example; can be extended
+    return email.length > 0 && password.length > 0;
+  }
+
   logout(): void {
     localStorage.removeItem('currentUser');
     this.loggedIn.next(false);
@@ -58,6 +63,6 @@ export class AuthService {
   }
 
   registerUser(newUser: Omit<BaseUser, 'id'>) {
-    return this.http.post<{ success: boolean; message: string; user?: BaseUser }>(`${this.apiUrl}/register`, newUser);
+    return this.http.post<{ success: boolean; message: string; user?: BaseUser }>(this.apiUrl + '/register', newUser);
   }
 }

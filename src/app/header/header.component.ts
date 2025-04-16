@@ -15,14 +15,14 @@ import { FormsModule } from '@angular/forms';
       <nav class="header__nav">
         <ul class="header__nav-list">
           <li class="header__nav-item"><a [routerLink]="['/categories']">Categories</a></li>
-          <li class="header__nav-item"><a href="/about">About</a></li>
-          <li class="header__nav-item"><a href="/contact">Contact</a></li>
+          <li class="header__nav-item"><a [routerLink]="['/about']">À propos</a></li>
+          <li class="header__nav-item"><a [routerLink]="['/contact']">Contact</a></li>
         </ul>
       </nav>
       <div class="header__search">
         <input 
           type="text" 
-          placeholder="Search jobs..." 
+          placeholder="Chercher emploi..." 
           [(ngModel)]="searchTerm"
           (keyup.enter)="searchJobs()"
           class="header__search-input"
@@ -32,20 +32,20 @@ import { FormsModule } from '@angular/forms';
       <nav class="header__user-nav">
       <ul class="header__user-nav-list">
         <ng-container *ngIf="isLoggedIn; else showLoginRegister">
-          <li class="header__user-nav-item user-welcome">Welcome, {{ currentUserName }}</li>
+          <li class="header__user-nav-item user-welcome">Bienvenue, {{ currentUserName }}</li>
           <li class="header__user-nav-item">
-            <a [routerLink]="['/manage-account']">Manage Account</a>
+            <a [routerLink]="['/manage-account']">Gestion du compte</a>
           </li>
           <li class="header__user-nav-item">
-            <a href="#" (click)="logout()">Logout</a>
+            <a href="#" (click)="logout()">Déconnexion</a>
           </li>
         </ng-container>
         <ng-template #showLoginRegister>
           <li class="header__user-nav-item">
-            <a [routerLink]="['/login']">Login</a>
+            <a [routerLink]="['/login']">Connexion</a>
           </li>
           <li class="header__user-nav-item">
-            <a [routerLink]="['/register']">Register</a>
+            <a [routerLink]="['/register']">inscription</a>
           </li>
         </ng-template>
       </ul>

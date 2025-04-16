@@ -235,8 +235,7 @@ export class RegisterComponent {
   userTypes = [
     { value: 'Etudiant', label: 'Etudiant' },
     { value: 'jobseeker', label: 'Utilisateur normal' },
-    { value: 'entrepreneur', label: 'Entrepreneur' },
-    { value: 'admin', label: 'Admin' }
+    { value: 'entrepreneur', label: 'Entrepreneur' }
   ];
 
   passwordMatchValidator(form: FormGroup) {

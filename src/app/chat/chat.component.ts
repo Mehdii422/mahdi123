@@ -33,57 +33,137 @@ interface ChatMessage {
     </div>
   `,
   styles: [`
-    .chat-container {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      max-height: 100%;
-      padding: 1em;
-      box-sizing: border-box;
+    :host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f4f6f9; // Light background to match the app
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.chat-container {
+  max-width: 600px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+header {
+  margin-top: 6rem;
+  flex-shrink: 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  p {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+    color: #666;
+  }
+}
+
+.conversation {
+  flex: 1;
+  overflow-y: auto;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  max-width: 70%;
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+  position: relative;
+}
+
+.user-message {
+  align-self: flex-end;
+  background-color: #007bff;
+  color: #fff;
+  border-bottom-right-radius: 0;
+}
+
+.entrepreneur-message {
+  align-self: flex-start;
+  background-color: #e4e6eb;
+  color: #333;
+  border-bottom-left-radius: 0;
+}
+
+.timestamp {
+  font-size: 0.7rem;
+  color: #888;
+  margin-top: 0.2rem;
+  text-align: right;
+}
+
+.message-input {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+  background-color: #f4f6f9;
+
+  input {
+    flex: 1;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+
+    &:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
     }
-    header {
-      padding-bottom: 1em;
-      border-bottom: 1px solid #ccc;
+  }
+
+  button {
+    margin-left: 0.75rem;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #0056b3;
     }
-    .conversation {
-      flex: 1;
-      overflow-y: auto;
-      margin: 1em 0;
-      background: #f9f9f9;
-      padding: 1em;
-      border-radius: 4px;
+
+    &:disabled {
+      background-color: #999;
+      cursor: not-allowed;
     }
-    .message {
-      margin: 0.5em 0;
-    }
-    .user-message {
-      text-align: right;
-    }
-    .entrepreneur-message {
-      text-align: left;
-    }
-    .timestamp {
-      display: block;
-      font-size: 0.75em;
-      color: #888;
-    }
-    .message-input {
-      display: flex;
-      border-top: 1px solid #ccc;
-      padding-top: 1em;
-    }
-    input {
-      flex: 1;
-      padding: 0.5em;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1em;
-    }
-    button {
-      margin-left: 0.5em;
-      padding: 0.5em 1em;
-      font-size: 1em;
-    }
+  }
+}
+
   `]
 })
 export class ChatComponent implements OnInit {

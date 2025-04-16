@@ -25,7 +25,7 @@ import { AuthService, BaseUser } from '../auth.service';
       </form>
     </div>
   `,
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    @Inject(AuthService) private authService: AuthService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -48,28 +48,22 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      const user: BaseUser | null = this.authService.validateCredentials(email, password);
-
-      // before : if (user) {
-        // Save user data in localStorage manually
-        //localStorage.setItem('currentUser', JSON.stringify(user));
-        //this.successMessage = 'Login successful! Redirecting...';
-        //this.errorMessage = '';
-        // Redirect to home page
-        //setTimeout(() => this.router.navigate(['']), 1500);}
-
-      if (user) {
-        // Use the AuthService login method to update localStorage and observables
-        this.authService.login(user);
-        this.successMessage = 'Login successful! Redirecting...';
-        this.errorMessage = '';
-        setTimeout(() => this.router.navigate(['']), 1500);
-    }
-    
-      } else {
-        this.errorMessage = 'Invalid email or password.';
-        this.successMessage = '';
+      this.authService.login(email, password).subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.successMessage = 'Login successful! Redirecting...';
+            this.errorMessage = '';
+            setTimeout(() => this.router.navigate(['']), 1500);
+          } else {
+            this.errorMessage = 'Invalid email or password.';
+            this.successMessage = '';
+          }
+        },
+        error: (err) => {
+          this.errorMessage = err.error?.message || 'Login failed. Please try again.';
+          this.successMessage = '';
+        }
+      });
     }
   }
-  
 }
